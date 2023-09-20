@@ -77,3 +77,14 @@ userRouter.post("/login", async (req, res) => {
     res.send({ success: false, error: error.message });
   }
 });
+
+userRouter.get("/token", (req, res) => {
+  try {
+    if (!req.user) {
+      return res.send({ success: false, error: "You must first be logged in" });
+    }
+    res.send({ success: true, user: req.user });
+  } catch (error) {
+    res.send({ success: false, error: error.message });
+  }
+});
