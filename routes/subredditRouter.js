@@ -28,6 +28,7 @@ subredditRouter.post("/", async (req, res) => {
         error: "Please include a name for the subreddit",
       });
     }
+    // check if subreddit exists already
     const isExisting = await prisma.subreddit.findUnique({ where: { name } });
     if (isExisting) {
       return res.send({ success: false, error: "Subreddit already exists" });

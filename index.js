@@ -44,6 +44,10 @@ app.use("/subreddits", subredditRouter);
 app.use("/users", userRouter);
 app.use("/votes", voteRouter);
 
+app.get("/", (req, res) => {
+  res.send({ success: true, message: "welcome to the Reddit server!" });
+});
+
 app.use((req, res) => {
   res.send({ success: false, error: "No route found." });
 });
