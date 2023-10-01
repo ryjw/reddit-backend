@@ -20,6 +20,25 @@ postRouter.get("/", async (req, res) => {
   }
 });
 
+postRouter.get("/:postId", async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const post = await await prisma.post.findUnique({
+      where: { id: postId },
+      include: {
+        user: { select: { username: true, id: true } },
+        subreddit: true,
+        upvotes: true,
+        downvotes: true,
+        children: true,
+      },
+    });
+    res.send({ success: true, post });
+  } catch (error) {
+    res.send({ success: false, error: error.message });
+  }
+});
+
 postRouter.post("/", async (req, res) => {
   // need to include text, title, subredditid, userid, parentid?
   try {
